@@ -20,8 +20,7 @@ public class PixelNeighborhood4 implements PixelNeighborhood {
 	 */
 	@Override
 	public int numNeighbors() {
-		// TODO Auto-generated method stub
-		return 0;
+		return 4;
 	}
 
 	/* (non-Javadoc)
@@ -30,8 +29,10 @@ public class PixelNeighborhood4 implements PixelNeighborhood {
 	@Override
 	public PixelInfo getNeighbor(PixelInfo pixel, int i, int width, int height) {
 		PixelInfo neighbor = new PixelInfo(0,0,0);
-		//1 cycle = 8 pixels around the given pixel; i'th neighbor = number of
-		//cycles (n) + rest
+		//in case that i>8:
+		//1 cycle = 8 pixels around the given pixel
+		//i'th neighbor = number of cycles (n) + rest
+		//still works best for i<=8 :-)
 		int rest = i%8;
 		int n=(i/8)+1;
 		int x = pixel.x;

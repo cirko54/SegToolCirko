@@ -73,18 +73,29 @@ public class RegionGrowing {
 
 		// TODO
 		// dummy implementation - replace it by region growing algorithm!
-		for (int jj = -10; jj <= 10; jj++) {
-			for (int ii = -10; ii <= 10; ii++) {
-				PixelInfo pixel = startPixel.relativePos(ii, jj, width, height);
-				// check whether pixel should belong to region
-				if (shouldPixelBeIncluded(pixel)) {
-					// ok,so add pixel to S and add neighbors to A
-					selection[pixel.idx] = true;
-					countSelected++;
-				}
+//		for (int jj = -10; jj <= 10; jj++) {
+//			for (int ii = -10; ii <= 10; ii++) {
+//				PixelInfo pixel = startPixel.relativePos(ii, jj, width, height);
+//				// check whether pixel should belong to region
+//				if (shouldPixelBeIncluded(pixel)) {
+//					// ok,so add pixel to S and add neighbors to A
+//					selection[pixel.idx] = true;
+//					countSelected++;
+//				}
+//			}
+//		}
+		
+		PixelNeighborhood neighborhood = new PixelNeighborhood4();
+		PixelInfo pixel = startPixel;
+		for (int i=0;i<neighborhood.numNeighbors();i++) {
+			PixelInfo n = neighborhood.getNeighbor(pixel, i, width, height);
+			if ((n.isValidIndex(width,height) && (shouldPixelBeIncluded(n))) {
+				selection[n.idx] = true;
+				countSelected++;
+				activePixels.offer(n);
+				grow(n, selection);
 			}
 		}
-
 		// how many have been selected?
 		return countSelected;
 
