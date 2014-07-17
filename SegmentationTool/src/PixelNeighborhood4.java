@@ -38,31 +38,31 @@ public class PixelNeighborhood4 implements PixelNeighborhood {
 		int x = pixel.x;
 		int y = pixel.y;
 		switch (rest) {
-		case 1:
+		case 0:
 			x=x+n;
 			break;
-		case 2:
+		case 1:
 			y=y+n;
 			break;
-		case 3:
+		case 2:
 			x=x-n;
 			break;
+		case 3:
+			y=y-n;
+			break;
 		case 4:
+			x=x+n;
 			y=y-n;
 			break;
 		case 5:
 			x=x+n;
-			y=y-n;
-			break;
-		case 6:
-			x=x+n;
 			y=y+n;
 			break;
-		case 7:
+		case 6:
 			x=x-n;
 			y=y+n;
 			break;
-		case 8:
+		case 7:
 			x=x-n;
 			y=y-n;
 			break;

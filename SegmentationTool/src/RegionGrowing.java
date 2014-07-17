@@ -67,6 +67,7 @@ public class RegionGrowing {
 
 		// start the algorithm with just the start pixel in the active front
 		activePixels.offer(startPixel);
+		selection[startPixel.idx] = true;
 
 		// count how many have been selected
 		int countSelected = 0;
@@ -85,16 +86,19 @@ public class RegionGrowing {
 //			}
 //		}
 		
-		PixelNeighborhood neighborhood = new PixelNeighborhood4();
-		PixelInfo pixel = startPixel;
-		for (int i=0;i<neighborhood.numNeighbors();i++) {
-			PixelInfo n = neighborhood.getNeighbor(pixel, i, width, height);
-			if ((n.isValidIndex(width,height) && (shouldPixelBeIncluded(n))) {
-				selection[n.idx] = true;
-				countSelected++;
-				activePixels.offer(n);
-				grow(n, selection);
+		
+		while (activePixels.peek() != null) {
+			PixelInfo pixel = activePixels.remove();
+			PixelNeighborhood neighborhood = new PixelNeighborhood4();
+			for (int i=0;i<neighborhood.numNeighbors();i++) {
+				PixelInfo n = neighborhood.getNeighbor(pixel, i, width, height);
+				if ((n.isValidIndex(width,height) && (shouldPixelBeIncluded(n)))) {
+					selection[n.idx] = true;
+					countSelected++;
+					activePixels.offer(n);
+				}
 			}
+			
 		}
 		// how many have been selected?
 		return countSelected;
