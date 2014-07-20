@@ -22,6 +22,11 @@ public class Segmentation_16Bit implements PlugInFilter {
 	// names and colors for the different labels assigned to pixels
 	public final String[] labelNames  = {"Label 1", "Label 2", "Label 3", "Label 4", "Label 5"};
 	public final int[]    labelColors = new int[]{0x0000ff,0x2020ff,0x4040ff,0x6060ff,0x8080ff};
+	
+	// values for neighborhood size in growing algorithm
+	public final String[] neighSizeMenu = new String[]{"4 Pix.","8 Pix."};
+	public final static byte[] neighSizeValues = new byte[]{4,8};
+	
 
 	// --- end of public attributes ---
 	

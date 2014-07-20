@@ -1,21 +1,17 @@
 /**
- * 
- */
-
-/**
  * @author Aleksandar Cirkovic
  *
  */
-public class PixelNeighborhood4 implements PixelNeighborhood {
+public class PixelNeighborhood8 implements PixelNeighborhood {
 
 	/**
 	 * 
 	 */
-	public PixelNeighborhood4() {
+	public PixelNeighborhood8() {
 	}
 	@Override
 	public int numNeighbors() {
-		return 4;
+		return 8;
 	}
 
 	/* (non-Javadoc)

@@ -18,10 +18,15 @@ public class RegionGrowing {
 	// inclusion criterium 3: already belonging to other segmented region?
 	public boolean stopAtOtherSegmentedRegions;
 
+	// 4 or 8 pixels in the growing neighborhood?
+	public byte neighSize;
+
 	// all required info about the image to be processed
 	private short[] pixels;
 	private byte[] labels;
 	int width, height;
+
+	// calculate program running time for evaluation of growing algorithm
 
 	// constructor requires image dimensions as well as arrays for pixel values
 	// and labels.
@@ -37,6 +42,8 @@ public class RegionGrowing {
 
 		this.min_threshold = 0;
 		this.max_threshold = 255 * 255;
+
+		this.neighSize = 4;
 
 		this.useThresholdRange = true;
 		this.stopAtOtherSegmentedRegions = true;
@@ -72,35 +79,44 @@ public class RegionGrowing {
 		// count how many have been selected
 		int countSelected = 0;
 
-		// TODO
-		// dummy implementation - replace it by region growing algorithm!
-//		for (int jj = -10; jj <= 10; jj++) {
-//			for (int ii = -10; ii <= 10; ii++) {
-//				PixelInfo pixel = startPixel.relativePos(ii, jj, width, height);
-//				// check whether pixel should belong to region
-//				if (shouldPixelBeIncluded(pixel)) {
-//					// ok,so add pixel to S and add neighbors to A
-//					selection[pixel.idx] = true;
-//					countSelected++;
-//				}
-//			}
-//		}
-		
-		
+		long startTime = System.currentTimeMillis();
 		while (activePixels.peek() != null) {
 			PixelInfo pixel = activePixels.remove();
-			PixelNeighborhood neighborhood = new PixelNeighborhood4();
-			for (int i=0;i<neighborhood.numNeighbors();i++) {
+			PixelNeighborhood neighborhood = null;
+			if (neighSize == 4) {
+				neighborhood = new PixelNeighborhood4();
+
+			} else if (neighSize == 8) {
+				neighborhood = new PixelNeighborhood8();
+			}
+			for (int i = 0; i < neighborhood.numNeighbors(); i++) {
 				PixelInfo n = neighborhood.getNeighbor(pixel, i, width, height);
-				if ((n.isValidIndex(width,height) && (shouldPixelBeIncluded(n)))) {
+				if ((n.isValidIndex(width, height) && (shouldPixelBeIncluded(n)))
+						&& (!visited[n.idx])) {
+					// only go on if the checkbox isn't checked or it's not a labeled pixel
+					if ((stopAtOtherSegmentedRegions) && labels[n.idx] > 0
+							&& labels[n.idx] < 6) {
+					} else {
 					selection[n.idx] = true;
 					countSelected++;
+					visited[n.idx] = true;
 					activePixels.offer(n);
 				}
 			}
-			
+			}
+
 		}
-		// how many have been selected?
+		// how many have been selected? which neighborhood was used? how long
+		// did it take?
+		if (neighSize == 4) {
+			System.out.println("4 Pixel Neighborhood was used");
+		} else if (neighSize == 8) {
+			System.out.println("8 Pixel Neighborhood was used");
+		}
+		long endTime = System.currentTimeMillis();
+		long totalTime = endTime - startTime;
+		System.out.println("It took me " + totalTime + " milliseconds.");
+
 		return countSelected;
 
 	}
@@ -109,8 +125,9 @@ public class RegionGrowing {
 	public boolean shouldPixelBeIncluded(PixelInfo pixel) {
 		int color = pixels[pixel.idx];
 
-		//check for criteria: ThresholdRange activated, color within range; return
-		//value as inclusion decision
+		// check for criteria: ThresholdRange activated, color within range;
+		// return
+		// value as inclusion decision
 		boolean colorWithinThresholdRange = (color >= min_threshold && color <= max_threshold);
 		return (this.useThresholdRange && colorWithinThresholdRange);
 	}
