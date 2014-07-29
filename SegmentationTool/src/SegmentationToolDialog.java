@@ -387,6 +387,7 @@ public class SegmentationToolDialog extends JDialog implements ChangeListener,
 		} else {
 			// no modifier key: replace model's selection by this one
 			model.replaceSelection(tmp_select);
+			System.out.println("Ätsch, hab schon wieder ersetzt.");
 		}
 
 		updateModel();

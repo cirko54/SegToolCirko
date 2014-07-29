@@ -26,7 +26,6 @@ public class PixelNeighborhood4 implements PixelNeighborhood {
 	//for both values (and even larger ones, for experiments)
 	
 	public PixelInfo getNeighbor(PixelInfo pixel, int i, int width, int height) {
-		PixelInfo neighbor = new PixelInfo(0,0,0);
 		//in case that i>8:
 		//1 cycle = 8 pixels around the given pixel
 		//i'th neighbor = number of cycles (n) + rest
@@ -66,7 +65,7 @@ public class PixelNeighborhood4 implements PixelNeighborhood {
 			break;
 		}
 		//now we can calculate the new neighbor-pixel
-		neighbor=PixelInfo.createFromXY(x,y,width,height);
+		PixelInfo neighbor = PixelInfo.createFromXY(x,y,width,height);
 		return neighbor;
 	}
 

@@ -26,7 +26,6 @@ public class RegionGrowing {
 	private byte[] labels;
 	int width, height;
 
-	// calculate program running time for evaluation of growing algorithm
 
 	// constructor requires image dimensions as well as arrays for pixel values
 	// and labels.
@@ -79,7 +78,9 @@ public class RegionGrowing {
 		// count how many have been selected
 		int countSelected = 0;
 
+		// calculate program running time for evaluation of growing algorithm
 		long startTime = System.currentTimeMillis();
+		
 		while (activePixels.peek() != null) {
 			PixelInfo pixel = activePixels.remove();
 			PixelNeighborhood neighborhood = null;
@@ -106,13 +107,14 @@ public class RegionGrowing {
 			}
 
 		}
-		// how many have been selected? which neighborhood was used? how long
-		// did it take?
+		// how many have been selected? which neighborhood was used? 
 		if (neighSize == 4) {
 			System.out.println("4 Pixel Neighborhood was used");
 		} else if (neighSize == 8) {
 			System.out.println("8 Pixel Neighborhood was used");
 		}
+		
+		//how long did it take?
 		long endTime = System.currentTimeMillis();
 		long totalTime = endTime - startTime;
 		System.out.println("It took me " + totalTime + " milliseconds.");
@@ -131,5 +133,5 @@ public class RegionGrowing {
 		boolean colorWithinThresholdRange = (color >= min_threshold && color <= max_threshold);
 		return (this.useThresholdRange && colorWithinThresholdRange);
 	}
-
+	
 }

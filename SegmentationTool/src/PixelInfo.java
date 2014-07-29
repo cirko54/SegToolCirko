@@ -35,17 +35,17 @@ public class PixelInfo {
 	public boolean isValidIndex(int width, int height) {
 		return x>=0 && x<width && y>=0 && y<height; 
 	}	
-	
-	// query number of neighbors in currently selected neighborhood
-	public int numNeighbors() { 
-		return 0; 
-	} 
-
-	// find the i'th neighbor (i must be < numNeighbors())
-	// result may be an invalid pixel index!
-	public PixelInfo getNeighbor(int i, int width, int height) {
-		return null; 
-	}
-
-
 }
+//	// query number of neighbors in currently selected neighborhood
+//	public int numNeighbors() { 
+//		return 0; 
+//	} 
+//
+//	// find the i'th neighbor (i must be < numNeighbors())
+//	// result may be an invalid pixel index!
+//	public PixelInfo getNeighbor(int i, int width, int height) {
+//		return null; 
+//	}
+//
+//
+//}
